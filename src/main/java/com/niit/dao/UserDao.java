@@ -2,14 +2,13 @@ package com.niit.dao;
 
 import java.util.List;
 
-import com.niit.model.MobileStore;
-import com.niit.model.User;
+import com.niit.model.UserModel;
 
 public interface UserDao {
-	  public User findUser(int User_id);
-	   public List<User> findAllUser();
-	   public void updateUser(User user);
-	   public void deleteUser(User user);
+	  public UserModel findUser(int User_id);
+	   public List<UserModel> findAllUser();
+	   public void updateUser(UserModel user);
+	   public void deleteUser(UserModel user);
 	   public void deleteAllUser();
-	   public void addUser(User user);
+	   public void addUser(UserModel user);
 }

@@ -1,25 +1,19 @@
 package com.niit.daoimpl;
 
+/*
 
-
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.springframework.stereotype.Repository;
 
 import com.niit.dao.UserDao;
-import com.niit.model.MobileStore;
-import com.niit.model.User;
+import com.niit.model.UserModel;
 
-@Repository("userDao")
+//@Repository("userDao")
 public class UserDaoImpl implements UserDao{
 	private Session currentSession;
 	private Transaction currentTransaction;
@@ -69,36 +63,36 @@ public class UserDaoImpl implements UserDao{
     	 	this.currentTransaction = currentTransaction;
     }
      @Override
-  	public List<User> findAllUser() {
-  		List<User> users = (List<User>) getCurrentSession().createQuery("from User").list();
+  	public List<UserModel> findAllUser() {
+  		List<UserModel> users = (List<UserModel>) getCurrentSession().createQuery("from UserTable").list();
           return users;
   	}
-      public User findUser(int Pro_id){
-  		User users=(User) getCurrentSession().get(User.class, Pro_id);
+      public UserModel findUser(int Pro_id){
+  		UserModel users=(UserModel) getCurrentSession().get(UserModel.class, Pro_id);
 
   		return users;
   	}
       @Override
-  	public void updateUser(User objs) {
+  	public void updateUser(UserModel objs) {
   		getCurrentSession().update(objs);
 
   	}
  	@Override
- 	public void addUser(User objs) 
+ 	public void addUser(UserModel objs) 
  	{
  		getCurrentSession().save(objs);
  	}
  	
  	@Override
- 	public void deleteUser(User objs) {
+ 	public void deleteUser(UserModel objs) {
  		// TODO Auto-generated method stub
  		//mobilestores.remove(mobilestore);
  		getCurrentSession().delete(objs);
  	}
  	@Override
  	public void deleteAllUser() {
- 		List<User> entityList = findAllUser();
-         for (User mobilestore : entityList) {
+ 		List<UserModel> entityList = findAllUser();
+         for (UserModel mobilestore : entityList) {
          	deleteUser(mobilestore);
          }
 
@@ -110,3 +104,4 @@ public class UserDaoImpl implements UserDao{
 	
 
 }
+*/

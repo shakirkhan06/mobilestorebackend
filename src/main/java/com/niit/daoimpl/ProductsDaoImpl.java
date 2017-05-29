@@ -13,10 +13,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import com.niit.config.*;
-import com.niit.dao.MobileStoreDao;
-import com.niit.model.MobileStore;
+import com.niit.dao.ProductsDao;
+import com.niit.model.ProductsModel;
 
-public class MobileStoreDaoImpl implements MobileStoreDao {
+public class ProductsDaoImpl implements ProductsDao {
 
 	private Session currentSession;
 	private Transaction currentTransaction;
@@ -65,37 +65,32 @@ public class MobileStoreDaoImpl implements MobileStoreDao {
      public void setCurrentTransaction(Transaction currentTransaction) {
     	 	this.currentTransaction = currentTransaction;
     }
-     @Override
- 	public List<MobileStore> findAllProduct() {
- 		List<MobileStore> products = (List<MobileStore>) getCurrentSession().createQuery("from MobileStore").list();
+     public List<ProductsModel> findAllProduct() {
+ 		List<ProductsModel> products = (List<ProductsModel>) getCurrentSession().createQuery("from MobileStore").list();
          return products;
  	}
-     public MobileStore findProduct(int Pro_id){
- 		MobileStore products=(MobileStore) getCurrentSession().get(MobileStore.class, Pro_id);
+     public ProductsModel findProduct(int Pro_id){
+ 		ProductsModel products=(ProductsModel) getCurrentSession().get(ProductsModel.class, Pro_id);
 
  		return products;
  	}
-     @Override
- 	public void updateProduct(MobileStore objs) {
+     public void updateProduct(ProductsModel objs) {
  		getCurrentSession().update(objs);
 
  	}
-	@Override
-	public void addProduct(MobileStore objs) 
+	public void addProduct(ProductsModel objs) 
 	{
-		getCurrentSession().save(objs);
+		getCurrentSession().saveOrUpdate(objs);
 	}
 	
-	@Override
-	public void deleteProduct(MobileStore objs) {
+	public void deleteProduct(ProductsModel objs) {
 		// TODO Auto-generated method stub
 		//mobilestores.remove(mobilestore);
 		getCurrentSession().delete(objs);
 	}
-	@Override
 	public void deleteAllProduct() {
-		List<MobileStore> entityList = findAllProduct();
-        for (MobileStore mobilestore : entityList) {
+		List<ProductsModel> entityList = findAllProduct();
+        for (ProductsModel mobilestore : entityList) {
         	deleteProduct(mobilestore);
         }
 
