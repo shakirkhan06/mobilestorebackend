@@ -5,10 +5,12 @@ import java.util.List;
 import com.niit.model.UserModel;
 
 public interface UserDao {
-	  public UserModel findUser(int User_id);
-	   public List<UserModel> findAllUser();
-	   public void updateUser(UserModel user);
-	   public void deleteUser(UserModel user);
-	   public void deleteAllUser();
-	   public void addUser(UserModel user);
+	List<UserModel> getAllUserDetails();
+	
+	UserModel getUserDetail(String id);
+	
+	void updateUserDetail(UserModel obj);
+	void addUser(UserModel obj);
+
+	void deleteUser(UserModel entity);
 }

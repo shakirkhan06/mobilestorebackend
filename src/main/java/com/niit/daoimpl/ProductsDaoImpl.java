@@ -1,103 +1,97 @@
 package com.niit.daoimpl;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.niit.config.*;
 import com.niit.dao.ProductsDao;
 import com.niit.model.ProductsModel;
-
+@Repository
 public class ProductsDaoImpl implements ProductsDao {
 
-	private Session currentSession;
-	private Transaction currentTransaction;
-
-	public Session openCurrentSession() {
-	    currentSession = getSessionFactory().openSession();
-	    return currentSession;
-    }
-	
-	public Session openCurrentSessionwithTransaction() {
-			currentSession = getSessionFactory().openSession();
-			currentTransaction = currentSession.beginTransaction();
-			return currentSession;
-	}
-
-    public void closeCurrentSession() {
-    		currentSession.close();
-    }
     
-     public void closeCurrentSessionwithTransaction() {
-         	currentTransaction.commit();
-         	currentSession.close();
-     }
-     
-	 private static SessionFactory getSessionFactory() {
-		     
-             Configuration configuration = new Configuration().configure();
-             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties());
-             SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
-             return sessionFactory;
-     }
-	
-	    public Session getCurrentSession() {
-		 	return currentSession;
-     }
-
-    public void setCurrentSession(Session currentSession) {
-        	this.currentSession = currentSession;
-     }
-
-    public Transaction getCurrentTransaction() {
-             return currentTransaction;
-     }
-
-     public void setCurrentTransaction(Transaction currentTransaction) {
-    	 	this.currentTransaction = currentTransaction;
+    @Autowired
+    SessionFactory sessionFactory;
+    public List<ProductsModel> getAllProdcutsDetails() {
+        Session session=sessionFactory.openSession();
+        session.beginTransaction();
+        
+        List<ProductsModel> product=sessionFactory.openSession().createCriteria(ProductsModel.class).list();
+        //List<ProductsModel> product=sessionFactory.openSession().createCriteria(ProductsModel.class).list();
+        
+        session.getTransaction().commit();
+        
+        return product;
     }
-     public List<ProductsModel> findAllProduct() {
- 		List<ProductsModel> products = (List<ProductsModel>) getCurrentSession().createQuery("from MobileStore").list();
-         return products;
- 	}
-     public ProductsModel findProduct(int Pro_id){
- 		ProductsModel products=(ProductsModel) getCurrentSession().get(ProductsModel.class, Pro_id);
 
- 		return products;
- 	}
-     public void updateProduct(ProductsModel objs) {
- 		getCurrentSession().update(objs);
+   /* public ProductsModel getCategoryDetail(String id) {
+    	ProductsModel p=(ProductsModel)sessionFactory.openSession().get(ProductsModel.class, id);
 
- 	}
-	public void addProduct(ProductsModel objs) 
-	{
-		getCurrentSession().saveOrUpdate(objs);
-	}
-	
-	public void deleteProduct(ProductsModel objs) {
+        // TODO Auto-generated method stub
+        return p;
+    }*/
+
+    public void updateCategoryDetail(ProductsModel obj) {
+        // TODO Auto-generated method stub
+    	   Session s=sessionFactory.openSession();
+           s.beginTransaction();
+           s.update(obj);
+           s.getTransaction().commit();
+           s.close(); 
+    }
+    public ProductsModel findById(String id) {
+		
 		// TODO Auto-generated method stub
-		//mobilestores.remove(mobilestore);
-		getCurrentSession().delete(objs);
-	}
-	public void deleteAllProduct() {
-		List<ProductsModel> entityList = findAllProduct();
-        for (ProductsModel mobilestore : entityList) {
-        	deleteProduct(mobilestore);
-        }
-
+		return sessionFactory.openSession().get(ProductsModel.class,id);
 	}
 
-	
+    public void addProducts(ProductsModel obj) 
+    {
+        System.out.println("Product Implementation");
 
 
+        Session s=sessionFactory.openSession();
+        s.beginTransaction();
+        s.save(obj);
+        s.getTransaction().commit();
+        s.close();
+        
+    }
+ 
+	public List<ProductsModel> getAllProducts() {
+		 Session sf =sessionFactory.openSession();
+	        sf.beginTransaction();
+	        Query query = sf.createQuery("from ProductsModel");
+	        List<ProductsModel> slist=query.list();
+	        System.out.println(slist);
+	        sf.getTransaction().commit();
+	        return slist;
+	}
+
+	public void delete(ProductsModel obj) {
+		Session s=sessionFactory.openSession();
+		s.beginTransaction();
+		s.delete(obj);
+		s.getTransaction().commit();
+		s.close();sessionFactory.openSession().delete(obj);
+		
+	}
+	public List<ProductsModel> getFilterProducts(int cid)
+	{
+		Session s=sessionFactory.openSession();
+		
+		List<ProductsModel> results =s.createQuery("from ProductsModel where CATEGORYID="+cid).list();
+		s.close();
+		// TODO Auto-generated method stub
+		return results;
+	}
+	public ProductsModel getCategoryDetail(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

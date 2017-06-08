@@ -16,6 +16,10 @@ import javax.persistence.UniqueConstraint;
 		@UniqueConstraint(columnNames = "order_Id")})
 public class OrdersModel implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="order_Id")
 	private Integer order_Id;

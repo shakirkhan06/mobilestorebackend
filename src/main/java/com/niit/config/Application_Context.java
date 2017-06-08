@@ -1,9 +1,7 @@
 package com.niit.config;
 
 import java.util.Properties;
-
 import javax.sql.DataSource;
-
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +12,12 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.niit.dao.CategoryDao;
-import com.niit.dao.SupplierDao;
-import com.niit.daoimpl.CategoryDaoImpl;
-import com.niit.daoimpl.SupplierDaoImpl;
+import com.niit.model.CartModel;
+import com.niit.model.CategoryModel;
+import com.niit.model.OrdersModel;
+import com.niit.model.ProductsModel;
+import com.niit.model.SupplierModel;
+import com.niit.model.UserModel;
 
 @Configuration
 @ComponentScan("com.niit.mobilestorebackend")
@@ -30,7 +30,7 @@ public class Application_Context {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
             
-        dataSource.setUrl("jdbc:h2:tcp://localhost/~/test1");
+        dataSource.setUrl("jdbc:h2:tcp://localhost/~/test3");
 
         dataSource.setDriverClassName("org.h2.Driver");
 
@@ -55,7 +55,13 @@ public class Application_Context {
 
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
         sessionBuilder.addProperties(getHibernateProperties());
-        sessionBuilder.scanPackages("com.niit.model");
+        sessionBuilder.addAnnotatedClass(ProductsModel.class);
+        sessionBuilder.addAnnotatedClass(CartModel.class);
+        sessionBuilder.addAnnotatedClass(SupplierModel.class);
+        sessionBuilder.addAnnotatedClass(CategoryModel.class);
+        sessionBuilder.addAnnotatedClass(UserModel.class);
+        sessionBuilder.addAnnotatedClass(OrdersModel.class);
+        //sessionBuilder.scanPackages("com.niit.model");
         return sessionBuilder.buildSessionFactory();
     }
 
@@ -66,23 +72,5 @@ public class Application_Context {
 
         return transactionManager;
     }
-
-    
-    
-   @Autowired
-    @Bean(name = "categoryDAO")
-    public CategoryDao getCategoryDAO(SessionFactory sessionFactory) {
-        return new CategoryDaoImpl(sessionFactory);
-    }
-   @Autowired
-    @Bean(name = "supplierDAO")
-    public SupplierDao getSupplierDAO(SessionFactory sessionFactory) {
-        return new SupplierDaoImpl(sessionFactory);
-    }
- /*  @Autowired
-   @Bean(name = "productsDAO")
-   public SupplierDao getSupplierDAO(SessionFactory sessionFactory) {
-       return new SupplierDaoImpl(sessionFactory);
-   }*/
 }
    

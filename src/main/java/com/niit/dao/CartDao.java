@@ -5,10 +5,14 @@ import java.util.List;
 import com.niit.model.CartModel;
 
 public interface CartDao {
-	  public CartModel findCart(int cartId);
-	   public List<CartModel> findAllCart();
-	   public void updateCart(CartModel cart);
-	   public void deleteCart(CartModel cart);
-	   public void deleteAllCart();
-	   public void addCart(CartModel cart);
+	public void save(CartModel cart);
+	public CartModel getId(int id);
+	//update
+	public void update(CartModel cart);
+	//deleted
+	public void deleteById(CartModel id);
+	//Get All
+	public List<CartModel> getAll();
+	public CartModel findById(int id);
+	public List<CartModel> checkExistance(String pid);
 }

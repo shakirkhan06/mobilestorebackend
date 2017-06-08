@@ -3,53 +3,61 @@ package com.niit.daoimpl;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.niit.dao.CategoryDao;
 
 import com.niit.model.CategoryModel;
-
+@Repository
 public class CategoryDaoImpl implements CategoryDao
 {
-	@Autowired
-	SessionFactory sessionFactory;
-	
-	public CategoryDaoImpl(SessionFactory sessionFactory) {
-		// TODO Auto-generated constructor stub
-		this.sessionFactory=sessionFactory;
-	}
-	public List<CategoryModel> getAllCategoryDetails() {
-		Session session=sessionFactory.openSession();
-		List<CategoryModel> products =null;
-		session.beginTransaction();
-		products= session.createQuery("from CategoryModel").list();   
-		session.getTransaction().commit();
-		  return products;
-	}
-/*
-	public CategoryModel getCategoryDetail(int id) {
-		CategoryModel product = (CategoryModel) getCurrentSession().get(CategoryModel.class, id);
+	 @Autowired
+	    SessionFactory sessionFactory;
+	  public List<CategoryModel> getAllCategoryDetails() {
+	        
+	        Session sf =sessionFactory.openSession();
+	        sf.beginTransaction();
+	        Query query = sf.createQuery("from CategoryModel");
+	        List<CategoryModel> list=query.list();
+	        System.out.println(list);
+	        sf.getTransaction().commit();
+	        return list;
+	        
+	    }
+	    public CategoryModel getCategoryDetail(String id) {
+	        
+	    	CategoryModel c=(CategoryModel)sessionFactory.openSession().get(CategoryModel.class, id);
+	        // TODO Auto-generated method stub
+	        return c;
+	    }
 
-        return product;
-	}
+	    public void updateCategoryDetail(CategoryModel obj) {
+	        // TODO Auto-generated method stub
+	        
+	    }
 
-	public void updateCategoryDetail(CategoryModel obj) {
-		getCurrentSession().update(obj);
-		
-	}*/
+	    public void addCategory(CategoryModel obj)
+	    {
+	        Session s=sessionFactory.openSession();
+	        s.beginTransaction();
+	        s.save(obj);
+	        s.getTransaction().commit();
+	        s.close();
+	        // TODO Auto-generated method stub
+	        
+	    }
 
-	public void addCategory(CategoryModel obj) {
-		Session session=sessionFactory.openSession();
-		session.beginTransaction();
-		session.persist(obj);
-		session.getTransaction().commit();
-		
-	}
+	    public void deleteProduct(CategoryModel entity) {
+			// TODO Auto-generated method stub
+			
+		}
 
-	/*public void deleteCategory(int catId) {
-		getCurrentSession().delete(catId);
-		
-	}*/
-	
+
+
+
+
+
+
 }

@@ -7,11 +7,16 @@ import com.niit.model.ProductsModel;
 
 public interface ProductsDao
 {
-	   public ProductsModel findProduct(int pro_id);
-	   public List<ProductsModel> findAllProduct();
-	   public void updateProduct(ProductsModel mobilestore);
-	   public void deleteProduct(ProductsModel mobilestore);
-	   public void deleteAllProduct();
-	   public void addProduct(ProductsModel mobilestore);
+	List<ProductsModel> getAllProdcutsDetails();
 	
+	ProductsModel getCategoryDetail(String id);
+	
+	void updateCategoryDetail(ProductsModel obj);
+	
+	void addProducts(ProductsModel obj);
+	public List<ProductsModel> getAllProducts();
+	public void delete(ProductsModel obj);
+	public ProductsModel findById(String id);
+	public List<ProductsModel> getFilterProducts(int cid);
+
 }

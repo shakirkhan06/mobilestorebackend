@@ -7,13 +7,12 @@ import com.niit.model.SupplierModel;
 public interface SupplierDao {
 
 	//Method for reading all category details
-			List<SupplierModel> getAllCategoryDetails();
-			/*//Method for reading single category details
-			CategoryModel getCategoryDetail(int id);
-			//Method for updating a category details
-			void updateCategoryDetail(CategoryModel obj);*/
-			//Method for adding a category details
+			List<SupplierModel> getAllSupplier();
+			public SupplierModel getSupplierDetails(String id);
+			
+			void updateSupplierDetail(SupplierModel obj);
 			void addSupplier(SupplierModel obj);
-			/*//Method for deleting a category details
-			void deleteCategory(int catId);*/
+			void deleteProduct(SupplierModel entity);
+			public List<SupplierModel> getAllCategories();
+		
 }

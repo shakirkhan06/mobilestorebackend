@@ -1,5 +1,6 @@
 com\niit\dao\CartDao.class
 com\niit\model\SupplierModel.class
+com\niit\daoimpl\SupplierDaoImpl.class
 com\niit\model\ProductsModel.class
 com\niit\model\CartModel.class
 com\niit\dao\CategoryDao.class
